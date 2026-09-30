@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flashcard Quiz App</title>
+  <meta name="description" content="Flashcard app with study mode, quiz mode, categories and shuffle.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗂️</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app" id="app" data-mode="study">
+    <header class="top">
+      <h1>Flashcards</h1>
+      <p id="counter" class="counter" aria-live="polite"></p>
+    </header>
+
+    <div class="toolbar">
+      <div class="tabs" role="tablist">
+        <button id="tabStudy" class="tab active" role="tab">Study</button>
+        <button id="tabQuiz" class="tab" role="tab">Quiz</button>
+      </div>
+      <select id="category" aria-label="Category"></select>
+      <button id="shuffleBtn" class="btn small only-study" aria-pressed="false">Shuffle</button>
+    </div>
+
+    <div class="progress" aria-hidden="true"><span id="bar"></span></div>
+
+    <section id="study">
+      <div id="card" class="card" role="group" aria-label="Flashcard">
+        <div class="face front"><span class="tag" id="tagFront">Question</span><p id="question"></p></div>
+        <div class="face back"><span class="tag">Answer</span><p id="answer"></p></div>
+      </div>
+
+      <button id="flipBtn" class="btn primary wide">Show Answer</button>
+
+      <div class="nav only-study">
+        <button id="prevBtn" class="btn">Previous</button>
+        <button id="nextBtn" class="btn">Next</button>
+      </div>
+
+      <div class="nav only-quiz" id="grade" hidden>
+        <button id="missBtn" class="btn miss">Missed it</button>
+        <button id="gotBtn" class="btn got">Got it</button>
+      </div>
+
+      <div class="manage only-study">
+        <button id="addBtn" class="btn ghost">Add card</button>
+        <button id="editBtn" class="btn ghost">Edit</button>
+        <button id="deleteBtn" class="btn ghost danger">Delete</button>
+        <button id="exportBtn" class="btn ghost">Export</button>
+        <button id="importBtn" class="btn ghost">Import</button>
+        <input type="file" id="importFile" accept=".json,application/json" hidden>
+      </div>
+    </section>
+
+    <section id="result" class="result" hidden>
+      <h2 id="score"></h2>
+      <p id="scoreNote"></p>
+      <div class="nav">
+        <button id="retryBtn" class="btn">Retry missed</button>
+        <button id="restartBtn" class="btn primary">Restart quiz</button>
+      </div>
+    </section>
+
+    <section id="empty" class="empty" hidden>
+      <p>No cards here yet. Add a question to start studying.</p>
+      <button id="emptyAdd" class="btn primary">Add card</button>
+    </section>
+  </main>
+
+  <dialog id="dialog">
+    <form id="form" method="dialog">
+      <h2 id="dialogTitle">Add card</h2>
+      <label>Category
+        <input id="cInput" list="cats" maxlength="30" placeholder="e.g. Web Development">
+        <datalist id="cats"></datalist>
+      </label>
+      <label>Question
+        <textarea id="qInput" rows="3" required maxlength="300"></textarea>
+      </label>
+      <label>Answer
+        <textarea id="aInput" rows="3" required maxlength="500"></textarea>
+      </label>
+      <div class="actions">
+        <button type="button" id="cancelBtn" class="btn">Cancel</button>
+        <button type="submit" class="btn primary">Save card</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status"></div>
+  <script src="script.js"></script>
+</body>
+</html>
